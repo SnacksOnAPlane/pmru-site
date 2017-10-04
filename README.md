@@ -1,1 +1,1 @@
-# pmru-site
+# prmu-site
