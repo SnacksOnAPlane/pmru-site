@@ -1,8 +1,31 @@
-<html>
+<html ng-app="PRMU">
 	<head>
-		<title>test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="prmu.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-93497506-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" type="text/css" href="skeleton.css">
+    <link rel="stylesheet" type="text/css" href="prmu.css">
+		<title>Puerto Rico Maria Updates</title>
 	</head>
 	<body>
-		<h1>test</h1>
+		<h1>Puerto Rico Maria Updates</h1>
+		<div class="container" ng-controller="MainController">
+			Select a city: <select ng-model="selectedCity" ng-change="selectedCityChanged()">
+				<option ng-repeat="city in cities" value="{{city}}">{{city}}</option>
+			</select>
+			<city-info city="selectedCity">
+			</city-info>
+		</div>
 	</body>
 </html>

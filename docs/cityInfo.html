@@ -1,0 +1,10 @@
+<div>
+  <h1>{{cityTitle}}</h1>
+  <ul>
+    <div ng-show="loading" ng-cloak>Loading...</div>
+    <li ng-repeat="entry in entries">
+      <a ng-href="{{ entry.link }}">{{ parseTime(entry.time) }}</a><br>
+      <pre>{{ entry.message}}</pre>
+    </li>
+  </ul>
+</div>
