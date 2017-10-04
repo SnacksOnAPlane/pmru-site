@@ -44,7 +44,6 @@ mod.directive("cityInfo", function() {
       }
 
       function sanitizeEntry(entry) {
-        console.log(entry);
         // basically we just want the fields that start with gsx$, and only their $t vals
         var retme = {};
         for (var k in entry) {
