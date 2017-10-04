@@ -2,8 +2,19 @@ var mod = angular.module('PRMU', []);
 
 var CITIES = "Adjuntas,Aguada,Aguadilla,Aguas Buenas,Aibonito,Añasco,Arecibo,Arroyo,Barceloneta,Barranquitas,Bayamon,Cabo Rojo,Caguas,Camuy,Canóvanas,Carolina,Cataño,Cayey,Ceiba,Ciales,Cidra,Coamo,Comerío,Corozal,Culebra,Dorado,Fajardo,Florida,Guayama,Guayanilla,Guaynabo,Gurabo,Guánica,Hatillo,Hormigueros,Humacao,Isabela,Isla Verde,Jayuya,Juana Díaz,Juncos,Lajas,Lares,Las Marías,Las Piedras,Luquillo,Loiza,Manati,Maricao,Maunabo,Mayagüez,Moca,Morovis,Naguabo,Naranjito,Orocovis,Patillas,Peñuelas,Ponce,Quebradillas,Rincón,Rio Grande,Sabana Grande,Salinas,San Germán,San Juan,San Lorenzo,San Sebastián,Santa Isabel,Toa Alta,Toa Baja,Trujillo Alto,Utuado,Vega Alta,Vega Baja,Villalba,Yabucoa,Yauco".split(',');
 
-mod.controller('MainController', ['$scope','$http','$sce', function($scope, $http, $sce) {
+mod.controller('MainController', ['$scope','$http','$sce','$location', function($scope, $http, $sce, $location) {
   $scope.cities = CITIES;
+
+  $scope.selectedCityChanged = function() {
+    if ($scope.selectedCity) {
+      $location.search('city', $scope.selectedCity);
+    }
+  };
+
+  var city = $location.search().city;
+  if (city) {
+    $scope.selectedCity = city;
+  }
   }]);
   
 mod.directive("cityInfo", function() {
@@ -22,6 +33,17 @@ mod.directive("cityInfo", function() {
       $scope.parseTime = function(time_str) {
         return new Date(time_str).toString();
       };
+
+      $scope.downloadData = function() {
+        console.log("downloading...");
+        var lines = [];
+        for (var i = 0; i < $scope.entries.length; i++) {
+          var entry = $scope.entries[i];
+          lines.push(entry.link + "\n" + entry.time + "\n" + entry.message + "\n\n-----\n");
+        }
+				var blob = new Blob(lines, {type: "text/plain;charset=utf-8"});
+				saveAs(blob, "prmu-" + $scope.city + ".txt");
+      }
 
       function dateComparator(i1, i2) {
         var d1 = Date.parse(i1.time);
